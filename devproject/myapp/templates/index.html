@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+  
+{% block title %}Add New Records{% endblock title %}
+  
+{% block content %}
+<div class="col-md-12">    
+    <form method="POST" class="post-form" action="/addnew">  
+    {% csrf_token %}  
+    <div class="container">  
+        <div class="col-12">  
+        <h3>Enter Details</h3>  
+        </div>    
+     
+        <div class="mb-3"> 
+            <label>Name:</label>  
+            {{ form.name }}   
+        </div> 
+        <div class="mb-3"> 
+            <label>Title:</label>  
+            {{ form.title }}   
+        </div>  
+        <div class="mb-3"> 
+            <label>Number of page:</label>  
+            {{ form.number_of_page }}   
+        </div> 
+        <div class="mb-3"> 
+            <label>Description:</label>  
+            {{ form.description }}   
+        </div> 
+        <div class="mb-3"> 
+            <label>Author:</label>  
+            {{ form.author }}   
+        </div>
+        <div class="mb-3"> 
+            <label>Created date:</label>  
+            {{ form.created_date }}   
+        </div>
+        <div class="mb-3"> 
+            <button type="submit" class="btn btn-primary">Submit</button>    
+        </div> 
+    </div>  
+    </form>  
+</div> 
+{% endblock content %} 
