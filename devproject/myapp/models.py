@@ -3,7 +3,6 @@ from django.db import models
 
 
 class Employee(models.Model):
-    id = models.DecimalField(primary_key=True, max_digits=15, decimal_places=10)
     name = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
     number_of_page = models.DecimalField(max_digits=15, decimal_places=10)
