@@ -1,10 +1,67 @@
 from django.shortcuts import render, redirect
 from myapp.forms import EmployeeForm
 from myapp.models import Employee
+import mysql.connector as sql
 
 # Create your views here.
 
+#login
+em=''
+pwd=''
+def loginaction(request):
+    global em,pwd
+    if request.method=="POST":
+        m=sql.connect(host="localhost",user="root",passwd="23022002",database='website')
+        cursor=m.cursor()
+        d=request.POST
+        for key,value in d.items():
+            if key=="email":
+                em=value
+            if key=="password":
+                pwd=value
+        
+        c="select * from users where email='{}' and password='{}'".format(em,pwd)
+        cursor.execute(c)
+        t=tuple(cursor.fetchall())
+        if t==():
+            return render(request,'error.html')
+        else:
+            employees = Employee.objects.all()
+            return render(request, "show.html", {'employees': employees})
 
+    return render(request,'login_page.html')
+
+#signup
+fn=''
+ln=''
+s=''
+em=''
+pwd=''
+def signaction(request):
+    global fn,ln,s,em,pwd
+    if request.method=="POST":
+        m=sql.connect(host="localhost",user="root",passwd="23022002",database='website')
+        cursor=m.cursor()
+        d=request.POST
+        for key,value in d.items():
+            if key=="first_name":
+                fn=value
+            if key=="last_name":
+                ln=value
+            if key=="sex":
+                s=value
+            if key=="email":
+                em=value
+            if key=="password":
+                pwd=value
+        
+        c="insert into users Values('{}','{}','{}','{}','{}')".format(fn,ln,s,em,pwd)
+        cursor.execute(c)
+        m.commit()
+
+    return render(request,'signup_page.html')
+
+#book
 def addnew(request):
     if request.method == "POST":
         form = EmployeeForm(request.POST)
